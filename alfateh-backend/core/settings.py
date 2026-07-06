@@ -6,11 +6,26 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# -----------------------------
+#  SECURITY KEY
+# -----------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "change_this_in_production")
 
-DEBUG = True
+# -----------------------------
+#  DEBUG MODE
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+DEBUG = False
+
+# -----------------------------
+#  ALLOWED HOSTS
+# -----------------------------
+ALLOWED_HOSTS = [
+    "alfatehisp.sy",
+    "www.alfatehisp.sy",
+    "localhost",
+    "127.0.0.1",
+    "localhost:3000"
+]
 
 # -----------------------------
 #  INSTALLED APPS (Jazzmin First)
@@ -159,3 +174,24 @@ JAZZMIN_UI_TWEAKS = {
     "brand_colour": "navbar-primary",
 }
 
+# -----------------------------
+#  SECURITY SETTINGS (Production)
+# -----------------------------
+# Force HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HSTS Protection
+SECURE_HSTS_SECONDS = 31536000  # سنة كاملة
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure Cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# XSS Protection
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+
+# Referrer Policy
+SECURE_REFERRER_POLICY = "strict-origin"
