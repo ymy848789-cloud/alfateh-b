@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "change_this_in_production")
 
 # -----------------------------
 #  DEBUG MODE
-
+# -----------------------------
 DEBUG = False
 
 # -----------------------------
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "corsheaders",   # ← تمت إضافتها
     "cms",
 ]
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 # -----------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # ← تمت إضافتها ويجب أن تكون في الأعلى
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -130,6 +132,13 @@ REST_FRAMEWORK = {
 }
 
 # -----------------------------
+#  CORS SETTINGS (Frontend Dev)
+# -----------------------------
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # ← السماح للفرونت إند أثناء التطوير
+]
+
+# -----------------------------
 #  JAZZMIN SETTINGS (Dashboard)
 # -----------------------------
 JAZZMIN_SETTINGS = {
@@ -177,21 +186,12 @@ JAZZMIN_UI_TWEAKS = {
 # -----------------------------
 #  SECURITY SETTINGS (Production)
 # -----------------------------
-# Force HTTPS
 SECURE_SSL_REDIRECT = True
-
-# HSTS Protection
-SECURE_HSTS_SECONDS = 31536000  # سنة كاملة
+SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-
-# Secure Cookies
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
-# XSS Protection
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
-
-# Referrer Policy
 SECURE_REFERRER_POLICY = "strict-origin"
